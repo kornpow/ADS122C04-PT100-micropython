@@ -502,6 +502,9 @@ class ADS122C04(object):
         temp_c = self.int_temp.INT16 * TEMPERATURE_SENSOR_RESOLUTION
         return temp_c
 
+    def readPT100F(self):
+        return (self.readPT100Centigrade() * 1.8) + 32.0
+    
     def readPT100Centigrade(self):
         self.configureADCmode(ADS122C04_3WIRE_MODE)
         self.ADS122C04_start()
@@ -550,8 +553,8 @@ class ADS122C04(object):
 
 adc = ADS122C04()
 adc.ADS122C04_read_reg(0)
-adc.to_bin_string(adc.config_reg[0].all)
+#adc.to_bin_string(adc.config_reg[0].all)
 
-adc.readInternalTemperature()
+#adc.readInternalTemperature()
 print("temp PT100")
-print(adc.readPT100Centigrade())
+print(adc.readPT100F())
